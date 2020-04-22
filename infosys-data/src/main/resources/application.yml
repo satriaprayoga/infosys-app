@@ -17,7 +17,8 @@ security:
       
 spring:
   rabbitmq:
-    addresses: localhost:5672
+    host: localhost
+    port: 5672
     username: guest
     password: guest
   cloud:
@@ -43,7 +44,7 @@ spring:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy 
   application:
-    name: backend-data
+    name: infosys-data
   servlet:
     multipart:
      enabled: true

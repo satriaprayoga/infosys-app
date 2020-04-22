@@ -18,7 +18,7 @@ public class PackageService extends AbstractBaseService<TourPackage, Long>{
 	}
 	
 	public TourPackage findOneById(Long id) {
-		return packageRepository.findOneById(id).orElseThrow(()->{
+		return packageRepository.findOneById(id).<ResourceNotFoundException>orElseThrow(()->{
 			throw new ResourceNotFoundException(TourPackage.class,"id",id.toString());
 		});
 	}

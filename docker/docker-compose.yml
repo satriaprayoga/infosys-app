@@ -1,0 +1,65 @@
+version: '2'
+services: 
+    infosys-eureka:
+        image: infosys/eureka:test
+        mem_limit: 1073741824
+        ports: 
+            - "8761:8761"
+
+    infosys-gateway:
+        image: infosys/gateway:test
+        mem_limit: 1073741824
+        ports: 
+            - "5555:5555"
+        links: 
+            - "infosys-eureka:infosys-eureka"
+        environment: 
+            PROFILE:"default"
+            SERVER_PORT:"5555"
+            EUREKASERVER_URI:"http://infosys-eureka:8761/eureka"
+            EUREKASERVER_PORT:"8761"
+            RABBITMQ_PORT:"5672"
+
+    infosys-oauth:
+        image: infosys/authserver:test
+        mem_limit: 1073741824
+        ports: 
+            - "8082:8082"
+        links: 
+            - "infosys-eureka:infosys-eureka"
+            - "infosys-gateway:infosys-gateway"
+        environment: 
+            SERVER_PORT:"8082"
+            EUREKASERVER_URI:"http://infosys-eureka:8761/eureka"
+            EUREKASERVER_PORT:"8761"
+            GATEWAYSERVER_PORT:"5555"
+
+    infosys-data:
+        image: infosys/data:test
+        mem_limit: 1073741824
+        ports: 
+            - "8083:8083"
+        links: 
+            - "infosys-eureka:infosys-eureka"
+            - "infosys-gateway:infosys-gateway"
+            - "infosys-auth:infosys-auth"
+            - "rabbitmq:rabbitmq"
+        environment: 
+            SERVER_PORT:"8083"
+            EUREKASERVER_URI:"http://infosys-eureka:8761/eureka"
+            EUREKASERVER_PORT:"8761"
+            GATEWAYSERVER_PORT:"5555"
+            USERINFO_URI:"http://infosys-oauth:8082/user/"
+            TOKENINFO_URI:"http://infosys-oauth:8082/oauth/check_token/"
+            RABBITMQ_URI:"rabbitmq"
+            RABBITMQ_PORT:"5672"
+
+    rabbitmq:
+        image: rabbitmq:3-management-alpine
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        volumes: 
+            - ./.docker/rabbitmq/etc/:/etc/rabbitmq/
+            - ./.docker/rabbitmq/data/:/var/lib/rabbitmq/
+            - ./.docker/rabbitmq/logs/:/var/log/rabbitmq/

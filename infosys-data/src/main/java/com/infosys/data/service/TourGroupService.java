@@ -37,7 +37,7 @@ public class TourGroupService extends AbstractBaseService<TourGroup, Long>{
 			tg.setName(tourGroup.getName());
 			tg.setDestination(destination);
 			return tourGroupRepository.save(tg);
-		}).orElseThrow(() -> {
+		}).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(Destination.class, "id", destId.toString());
 		});
 	}
@@ -45,13 +45,13 @@ public class TourGroupService extends AbstractBaseService<TourGroup, Long>{
 	public List<TourGroup> findByDestination(Long id){
 		return destinationRepository.findById(id).map((destination)->{
 			return tourGroupRepository.findByDestination(destination);
-		}).orElseThrow(() -> {
+		}).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(Destination.class, "id", id.toString());
 		});
 	}
 	
 	public TourGroup findById(Long id) {
-		return tourGroupRepository.findOneById(id).orElseThrow(() -> {
+		return tourGroupRepository.findOneById(id).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(TourGroup.class, "id", id.toString());
 		});
 	}

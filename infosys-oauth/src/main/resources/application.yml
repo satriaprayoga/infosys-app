@@ -1,6 +1,6 @@
 spring: 
   application:
-    name: backend-oauth
+    name: infosys-oauth
   datasource:
     driver-class-name: org.h2.Driver
     username: root

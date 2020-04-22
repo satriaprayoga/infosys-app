@@ -60,7 +60,7 @@ public class ObjectMapper {
 						destination.getPhone(), null);
 			}
 
-		}).orElseThrow(() -> {
+		}).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(Destination.class, "id", id.toString());
 		});
 	}
@@ -70,7 +70,7 @@ public class ObjectMapper {
 			return new LandmarkProfile(landmark.getId(), landmark.getName(), landmark.getDescription(),
 					landmark.getHour(), landmark.getMinute(), landmark.getDestination().getName(),
 					landmark.getDestination().getLocation(), landmark.getDestination().getId());
-		}).orElseThrow(() -> {
+		}).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(Landmark.class, "id", id.toString());
 		});
 	}
@@ -91,7 +91,7 @@ public class ObjectMapper {
 				profile.setAdditionals(additionals);
 			}
 			return profile;
-		}).orElseThrow(() -> {
+		}).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(TourPackage.class, "id", id.toString());
 		});
 	}
@@ -185,7 +185,7 @@ public class ObjectMapper {
 			Additional additional=additionalRepository.findById(additionalRequest.getAdditionalId()).get();
 			p.addAdditional(additional);
 			return p;
-		}).orElseThrow(() -> {
+		}).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(TourPackage.class, "id", additionalRequest.getPackageId().toString());
 		});
 	}
@@ -195,7 +195,7 @@ public class ObjectMapper {
 			Additional additional=additionalRepository.findById(additionalRequest.getAdditionalId()).get();
 			p.removeAdditional(additional);
 			return p;
-		}).orElseThrow(() -> {
+		}).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(TourPackage.class, "id", additionalRequest.getPackageId().toString());
 		});
 	}

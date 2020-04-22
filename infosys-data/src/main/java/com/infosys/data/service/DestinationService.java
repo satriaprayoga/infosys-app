@@ -31,7 +31,7 @@ public class DestinationService extends AbstractBaseService<Destination, Long> {
 
 	
 	public void deleteById(Long id) {
-		destinationRepository.findOneById(id).orElseThrow(() -> {
+		destinationRepository.findOneById(id).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(Destination.class, "id", id.toString());
 		});
 		super.deleteById(id);
@@ -47,13 +47,13 @@ public class DestinationService extends AbstractBaseService<Destination, Long> {
 	}
 
 	public Destination findOneById(Long id) {
-		return destinationRepository.findOneById(id).orElseThrow(() -> {
+		return destinationRepository.findOneById(id).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(Destination.class, "id", id.toString());
 		});
 	}
 
 	public Destination findOneByCode(String code) {
-		return destinationRepository.findOneByDestinationCode(code).orElseThrow(() -> {
+		return destinationRepository.findOneByDestinationCode(code).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(Destination.class, "code", code);
 		});
 	}
@@ -61,7 +61,7 @@ public class DestinationService extends AbstractBaseService<Destination, Long> {
 	public List<Accessability> getAccessabilities(Long destId){
 		return destinationRepository.findById(destId).map((dest)->{
 			return dest.getAccessabilities();
-		}).orElseThrow(() -> {
+		}).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(Destination.class, "id", destId.toString());
 		});
 	}
@@ -76,7 +76,7 @@ public class DestinationService extends AbstractBaseService<Destination, Long> {
 			dest.getAccessabilities().add(acc);
 			destinationRepository.save(dest);
 			return acc;
-		}).orElseThrow(() -> {
+		}).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(Destination.class, "id", destId.toString());
 		});
 	}
@@ -86,7 +86,7 @@ public class DestinationService extends AbstractBaseService<Destination, Long> {
 			Destination dest=findOneById(destId);
 			dest.getAccessabilities().remove(access);
 			return destinationRepository.save(dest);
-		}).orElseThrow(() -> {
+		}).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(Destination.class, "id", accessId.toString());
 		});
 		

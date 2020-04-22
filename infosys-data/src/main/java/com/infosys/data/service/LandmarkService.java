@@ -25,7 +25,7 @@ public class LandmarkService extends AbstractBaseService<Landmark, Long>{
 	public List<Landmark> findByDestination(Long destId){
 		return destinationRepository.findById(destId).map((destination)->{
 			return landmarkRepository.findByDestination(destination);
-		}).orElseThrow(() -> {
+		}).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(Destination.class, "id", destId.toString());
 		});
 		
@@ -35,7 +35,7 @@ public class LandmarkService extends AbstractBaseService<Landmark, Long>{
 		return destinationRepository.findById(destId).map((destination)->{
 			landmark.setDestination(destination);
 			return landmarkRepository.save(landmark);
-		}).orElseThrow(() -> {
+		}).<ResourceNotFoundException>orElseThrow(() -> {
 			throw new ResourceNotFoundException(Destination.class, "id", destId.toString());
 		});
 	}

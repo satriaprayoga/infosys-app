@@ -1,6 +1,9 @@
 spring:
   application:
-    name: backend-gateway
+    name: infosys-gateway
+  profiles:
+    active:
+    - default
   servlet:
     multipart:
       enabled: true
@@ -15,20 +18,9 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 zuul:
-  ignoredServices: '*'
+  sensitive-headers: 
   host:
     connect-timeout-millis: 20000
     socket-timeout-millis: 20000
-  routes:
-    backend-oauth:
-      path: /uaa/**
-      service-id: backend-oauth
-      strip-prefix: true
-      sensitive-headers:
-    backend-data:
-      path: /data/**
-      service-id: backend-data
-      strip-prefix: true
-      sensitive-headers:
 server:
-  port: 8080
+  port: 5555
