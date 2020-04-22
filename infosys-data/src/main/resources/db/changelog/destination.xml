@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+	<property name="autoIncrement" value="true" />
+
+	<changeSet id="000001" author="gsprayoga">
+<!-- 		<preConditions onError="MARK_RAN"> -->
+<!-- 			<not> -->
+<!-- 				<tableExists tableName="destination" -->
+<!-- 					schemaName="infosysdb" /> -->
+<!-- 			</not> -->
+<!-- 			<not> -->
+<!-- 				<tableExists tableName="accessability" -->
+<!-- 					schemaName="infosysdb" /> -->
+<!-- 			</not> -->
+<!-- 			<not> -->
+<!-- 				<tableExists tableName="additional" -->
+<!-- 					schemaName="infosysdb" /> -->
+<!-- 			</not> -->
+<!-- 			<not> -->
+<!-- 				<tableExists tableName="landmark" schemaName="infosysdb" /> -->
+<!-- 			</not> -->
+<!-- 		</preConditions> -->
+		<createTable tableName="destination">
+			<column name="id" type="bigint"
+				autoIncrement="${autoIncrement}">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="description" type="nvarchar">
+			</column>
+			<column name="location" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="company" type="varchar(100)" />
+			<column name="email" type="varchar(100)" />
+			<column name="phone" type="varchar(100)" />
+			<column name="destination_code" type="varchar(10)">
+				<constraints nullable="false" unique="true" />
+			</column>
+			<column name="created_date" type="timestamp" />
+			<column name="last_modified_date" type="timestamp" />
+		</createTable>
+		<createTable tableName="accessability">
+			<column name="id" type="bigint"
+				autoIncrement="${autoIncrement}">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="access" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="km" type="int"></column>
+			<column name="minute" type="int"></column>
+			<column name="destination_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_date" type="timestamp" />
+			<column name="last_modified_date" type="timestamp" />
+		</createTable>
+		<createTable tableName="additional">
+			<column name="id" type="bigint"
+				autoIncrement="${autoIncrement}">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_date" type="timestamp" />
+			<column name="last_modified_date" type="timestamp" />
+		</createTable>
+		<createTable tableName="landmark">
+			<column name="id" type="bigint"
+				autoIncrement="${autoIncrement}">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="description" type="nvarchar">
+			</column>
+			<column name="hour" type="int" />
+			<column name="minute" type="int" />
+			<column name="destination_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_date" type="timestamp" />
+			<column name="last_modified_date" type="timestamp" />
+		</createTable>
+		<createTable tableName="image">
+			<column name="id" type="varchar(255)">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="filename" type="varchar(200)">
+				<constraints nullable="false" />
+			</column>
+			<column name="type" type="varchar(60)" />
+			<column name="data" type="blob"/>
+			<column name="cover" type="boolean"
+				defaultValueBoolean="false" />
+			<column name="image_category" type="varchar(20)"/>
+			<column name="ref_id" type="bigint"/>
+			<column name="created_date" type="timestamp" />
+			<column name="last_modified_date" type="timestamp" />
+		</createTable>
+		<addForeignKeyConstraint
+			constraintName="fk_destination_accessability_id"
+			referencedTableName="destination" baseColumnNames="destination_id"
+			baseTableName="accessability" referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="fk_destination_landmark_id"
+			referencedTableName="destination" baseColumnNames="destination_id"
+			baseTableName="landmark" referencedColumnNames="id" />
+		<createTable tableName="tour_group">
+			<column name="id" type="bigint"
+				autoIncrement="${autoIncrement}">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(100)">
+				<constraints nullable="false" />
+			</column>
+			<column name="destination_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_date" type="timestamp" />
+			<column name="last_modified_date" type="timestamp" />
+		</createTable>
+		<addForeignKeyConstraint
+			constraintName="fk_destination_tour_group_id"
+			referencedTableName="destination" baseColumnNames="destination_id"
+			baseTableName="tour_group" referencedColumnNames="id" />
+		<createTable tableName="tour_package">
+			<column name="id" type="bigint"
+				autoIncrement="${autoIncrement}">
+				<constraints primaryKey="true" nullable="false" />
+				</column>
+			<column name="tour_name" type="varchar(200)">
+				<constraints nullable="false" />
+			</column>
+			<column name="tour_group_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="accomodation_included" type="boolean"
+				defaultValueBoolean="false" />
+			<column name="published" type="boolean"
+				defaultValueBoolean="false" />
+			<column name="unit" type="varchar(20)" />
+			<column name="price" type="bigint" />
+			<column name="min_order" type="int" />
+			<column name="capacity" type="int"></column>
+			<column name="day" type="int" />
+			<column name="night" type="int"></column>
+			<column name="created_date" type="timestamp" />
+			<column name="last_modified_date" type="timestamp" />
+		</createTable>
+		<createTable tableName="package_additional">
+			<column name="package_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="additional_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addPrimaryKey columnNames="package_id, additional_id"
+			tableName="package_additional" />
+		<addForeignKeyConstraint
+			constraintName="fk_package_package_additional_id" referencedTableName="tour_package"
+			baseColumnNames="package_id" baseTableName="package_additional"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="fk_additional_package_additional_id" referencedTableName="additional"
+			baseColumnNames="additional_id" baseTableName="package_additional"
+			referencedColumnNames="id" />
+		<createTable tableName="package_landmark">
+			<column name="package_id" type="bigint">
+				<constraints nullable="false"/>
+			</column>
+			<column name="landmark_id" type="bigint">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+		<addPrimaryKey columnNames="package_id,landmark_id" tableName="package_landmark"/>
+		<addForeignKeyConstraint
+			constraintName="fk_package_package_landmark_id" referencedTableName="tour_package"
+			baseColumnNames="package_id" baseTableName="package_landmark"
+			referencedColumnNames="id" />
+		<addForeignKeyConstraint
+			constraintName="fk_landmark_package_landmark_id" referencedTableName="landmark"
+			baseColumnNames="landmark_id" baseTableName="package_landmark"
+			referencedColumnNames="id" />
+		<loadData file="db/data/destination.csv" separator=";"
+			tableName="destination">
+
+		</loadData>
+		<loadData file="db/data/additional.csv" separator=";"
+			tableName="additional">
+
+		</loadData>
+		
+	</changeSet>
+
+
+</databaseChangeLog>

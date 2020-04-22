@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+	<property name="autoIncrement" value="true" />
+
+	<changeSet id="000001" author="gsprayoga">
+		<preConditions onError="MARK_RAN">
+			<not>
+				<tableExists tableName="user" schemaName="infosysdb" />
+				
+			</not>
+			<not>
+				<tableExists tableName="role" schemaName="infosysdb" />
+				
+			</not>
+			<not>
+				<tableExists tableName="user_roles" schemaName="infosysdb" />
+			</not>
+			
+		</preConditions>
+		<createTable tableName="user">
+			<column name="id" type="bigint"
+				autoIncrement="${autoIncrement}">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="username" type="varchar(50)">
+				<constraints unique="true" nullable="false" />
+			</column>
+			<column name="password" type="varchar(60)" />
+			<column name="email" type="varchar(191)">
+				<constraints unique="true" nullable="false" />
+			</column>
+			<column name="enabled" type="boolean"
+				defaultValueBoolean="true" />
+			<column name="account_non_expired" type="boolean"
+				defaultValueBoolean="true" />
+			<column name="account_non_locked" type="boolean"
+				defaultValueBoolean="true" />
+			<column name="credentials_non_expired" type="boolean"
+				defaultValueBoolean="true" />
+			<column name="created_date" type="timestamp" />
+			<column name="last_modified_date" type="timestamp" />
+		</createTable>
+		<createTable tableName="role">
+			<column name="id" type="bigint"
+				autoIncrement="${autoIncrement}">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="authority" type="varchar(50)">
+				<constraints unique="true" nullable="false" />
+			</column>
+			<column name="created_date" type="timestamp" />
+			<column name="last_modified_date" type="timestamp" />
+		</createTable>
+		<createTable tableName="user_roles">
+			<column name="user_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+			<column name="role_id" type="bigint">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<createTable tableName="oauth_client_details">
+			<column name="client_id" type="varchar(256)">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="resource_ids" type="varchar(256)"/>
+			<column name="client_secret" type="varchar(256)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="scope" type="varchar(256)"/>
+			<column name="authorized_grant_types" type="varchar(256)"/>
+			<column name="web_server_redirect_uri" type="varchar(256)"/>
+			<column name="authorities" type="varchar(256)"/>
+			<column name="access_token_validity" type="int"/>
+			<column name="refresh_token_validity" type="int"/>
+			<column name="additional_information" type="bigint"/>
+			<column name="autoapprove" type="varchar(256)"/>
+		</createTable>
+		<createTable tableName="oauth_client_token">
+			<column name="token_id" type="varchar(256)"/>
+			<column name="token" type="blob"/>
+			<column name="authentication_id" type="varchar(256)">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="user_name" type="varchar(256)"/>
+			<column name="client_id" type="varchar(256)"/>
+		</createTable>
+		<createTable tableName="oauth_access_token">
+			<column name="token_id" type="varchar(256)"/>
+			<column name="token" type="blob"/>
+			<column name="authentication_id" type="varchar(256)"/>
+			<column name="user_name" type="varchar(256)"/>
+			<column name="client_id" type="varchar(256)"/>
+			<column name="authentication" type="blob"/>
+			<column name="refresh_token" type="varchar(256)"/>
+		</createTable>
+		<createTable tableName="oauth_refresh_token">
+			<column name="token_id" type="varchar(256)"/>
+			<column name="token" type="blob"/>
+			<column name="authentication" type="blob"/>
+		</createTable>
+		<createTable tableName="oauth_code">
+			<column name="code" type="varchar(256)"/>
+			<column name="authentication" type="blob"/>
+		</createTable>
+
+		<addPrimaryKey columnNames="user_id, role_id"
+			tableName="user_roles" />
+
+		<addForeignKeyConstraint
+			baseColumnNames="role_id" baseTableName="user_roles"
+			constraintName="fk_role_id" referencedColumnNames="id"
+			referencedTableName="role" />
+
+		<addForeignKeyConstraint
+			baseColumnNames="user_id" baseTableName="user_roles"
+			constraintName="fk_user_id" referencedColumnNames="id"
+			referencedTableName="user" />
+			
+		<loadData
+                  file="db/data/user.csv"
+                  separator=";"
+                  tableName="user"
+                 />
+        	<loadData
+                  file="db/data/role.csv"
+                  separator=";"
+                  tableName="role"
+                 />
+             	<loadData
+                  file="db/data/user_roles.csv"
+                  separator=";"
+                  tableName="user_roles"
+                 />
+		
+        <loadData
+                  file="db/data/oauth_client_details.csv"
+                  separator=";"
+                  tableName="oauth_client_details"
+                 />
+
+	
+	</changeSet>
+
+
+</databaseChangeLog>

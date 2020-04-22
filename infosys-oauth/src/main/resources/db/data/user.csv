@@ -1,0 +1,3 @@
+username;password;email;enabled;account_non_expired;account_non_locked;credentials_non_expired
+warehouse;$2a$04$6qCcwdAr8u/uQW6vgXtOwuKsCblOISNEJLLCoua0EBXIQjDc4fa4G;warehouse@mail.com;true;true;true;true
+waduk;$2a$04$6qCcwdAr8u/uQW6vgXtOwuKsCblOISNEJLLCoua0EBXIQjDc4fa4G;waduk@mail.com;true;true;true;true

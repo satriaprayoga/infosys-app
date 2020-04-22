@@ -1,0 +1,12 @@
+server:
+  port: 8761 #the default port used for eureka servers
+spring:
+  application:
+    name: backend-registry #name of the application
+eureka:
+  instance:
+    prefer-ip-address: true #when the application registers with eureka, it uses its IP address rather than its hostname
+  client:
+    registerWithEureka: false #tells the built-in eureka client to not register itself with eureka, because we should act as a server
+    fetchRegistry: false
+

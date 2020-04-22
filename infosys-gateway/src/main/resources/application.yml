@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: backend-gateway
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 1000MB
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+zuul:
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+  routes:
+    backend-oauth:
+      path: /uaa/**
+      service-id: backend-oauth
+      strip-prefix: true
+      sensitive-headers:
+    backend-data:
+      path: /data/**
+      service-id: backend-data
+      strip-prefix: true
+      sensitive-headers:
+server:
+  port: 8080
