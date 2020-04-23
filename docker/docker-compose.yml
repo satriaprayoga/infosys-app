@@ -14,11 +14,11 @@ services:
         links: 
             - "infosys-eureka:infosys-eureka"
         environment: 
-            PROFILE:"default"
-            SERVER_PORT:"5555"
-            EUREKASERVER_URI:"http://infosys-eureka:8761/eureka"
-            EUREKASERVER_PORT:"8761"
-            RABBITMQ_PORT:"5672"
+            PROFILE: "default"
+            SERVER_PORT: "5555"
+            EUREKASERVER_URI: "http://infosys-eureka:8761/eureka"
+            EUREKASERVER_PORT: "8761"
+            RABBITMQ_PORT: "5672"
 
     infosys-oauth:
         image: infosys/authserver:test
@@ -29,10 +29,10 @@ services:
             - "infosys-eureka:infosys-eureka"
             - "infosys-gateway:infosys-gateway"
         environment: 
-            SERVER_PORT:"8082"
-            EUREKASERVER_URI:"http://infosys-eureka:8761/eureka"
-            EUREKASERVER_PORT:"8761"
-            GATEWAYSERVER_PORT:"5555"
+            SERVER_PORT: "8082"
+            EUREKASERVER_URI: "http://infosys-eureka:8761/eureka"
+            EUREKASERVER_PORT: "8761"
+            GATEWAYSERVER_PORT: "5555"
 
     infosys-data:
         image: infosys/data:test
@@ -42,24 +42,35 @@ services:
         links: 
             - "infosys-eureka:infosys-eureka"
             - "infosys-gateway:infosys-gateway"
-            - "infosys-auth:infosys-auth"
+            - "infosys-oauth:infosys-oauth"
             - "rabbitmq:rabbitmq"
         environment: 
-            SERVER_PORT:"8083"
-            EUREKASERVER_URI:"http://infosys-eureka:8761/eureka"
-            EUREKASERVER_PORT:"8761"
-            GATEWAYSERVER_PORT:"5555"
-            USERINFO_URI:"http://infosys-oauth:8082/user/"
-            TOKENINFO_URI:"http://infosys-oauth:8082/oauth/check_token/"
-            RABBITMQ_URI:"rabbitmq"
-            RABBITMQ_PORT:"5672"
-
+            SERVER_PORT: "8083"
+            EUREKASERVER_URI: "http://infosys-eureka:8761/eureka"
+            EUREKASERVER_PORT: "8761"
+            GATEWAYSERVER_PORT: "5555"
+            USERINFO_URI: "http://infosys-oauth:8082/user/"
+            TOKENINFO_URI: "http://infosys-oauth:8082/oauth/check_token/"
+            RABBITMQ_URI: "rabbitmq"
+            RABBITMQ_PORT: "5672"
+    
+    infosys-web-api:
+        image: infosys/webapi:test
+        mem_limit: 1073741824
+        ports:
+            - "9001:9001"
+        links: 
+            - "infosys-eureka:infosys-eureka"
+            - "infosys-gateway:infosys-gateway"
+            - "infosys-data:infosys-data"
+        environment: 
+            SERVER_PORT: "9001"
+            EUREKASERVER_URI: "http://infosys-eureka:8761/eureka"
+            EUREKASERVER_PORT: "8761"
+            GATEWAYSERVER_PORT: "5555"
+            
     rabbitmq:
         image: rabbitmq:3-management-alpine
         ports:
             - "5672:5672"
             - "15672:15672"
-        volumes: 
-            - ./.docker/rabbitmq/etc/:/etc/rabbitmq/
-            - ./.docker/rabbitmq/data/:/var/lib/rabbitmq/
-            - ./.docker/rabbitmq/logs/:/var/log/rabbitmq/

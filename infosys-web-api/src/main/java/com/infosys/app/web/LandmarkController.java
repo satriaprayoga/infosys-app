@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.infosys.app.service.client.LandmarkDataService;
+import com.infosys.app.service.client.DataService;
 
 @RestController
 @RequestMapping("/data/landmarks")
 public class LandmarkController {
 
 	@Autowired
-	private LandmarkDataService landmarkService;
+	private DataService dataService;
 	
 	public LandmarkController() {
 		// TODO Auto-generated constructor stub
@@ -22,16 +22,16 @@ public class LandmarkController {
 	
 	@GetMapping
 	public ResponseEntity<?> getAllLandmarks(){
-		return landmarkService.getAllLandmarks();
+		return dataService.getAllLandmarks();
 	}
 	
 	@GetMapping("/dest/{destId}")
 	public ResponseEntity<?> findByDestination(@PathVariable Long destId){
-		return landmarkService.findByDestination(destId);
+		return dataService.findLandmarkByDestinationId(destId);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById(@PathVariable Long id){
-		return landmarkService.findById(id);
+		return dataService.findLandmarkById(id);
 	}
 }

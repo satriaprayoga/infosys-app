@@ -108,6 +108,44 @@
 	<build>
 		<plugins>
 			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<!-- here the phase you need -->
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/dockerfile</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/docker</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+             <groupId>com.spotify</groupId>
+             <artifactId>docker-maven-plugin</artifactId>
+             <version>1.2.2</version>
+             <configuration>
+                 <imageName>infosys/webapi:test</imageName>
+                 <dockerDirectory>${basedir}/target/dockerfile</dockerDirectory>
+                 <resources>
+                     <resource>
+                         <targetPath>/</targetPath>
+                         <directory>${project.build.directory}</directory>
+                         <include>${project.build.finalName}.jar</include>
+                     </resource>
+                 </resources>
+             </configuration>
+         </plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>

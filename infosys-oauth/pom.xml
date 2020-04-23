@@ -122,7 +122,7 @@
              <artifactId>docker-maven-plugin</artifactId>
              <version>1.2.2</version>
              <configuration>
-                 <imageName>infosys-oauth:test</imageName>
+                 <imageName>infosys/authserver:test</imageName>
                  <dockerDirectory>${basedir}/target/dockerfile</dockerDirectory>
                  <resources>
                      <resource>

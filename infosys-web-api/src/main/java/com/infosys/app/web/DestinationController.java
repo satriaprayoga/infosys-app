@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.infosys.app.security.exception.ResourceNotFoundException;
-import com.infosys.app.service.client.DestinationDataService;
+import com.infosys.app.service.client.DataService;
 
 
 @RestController
@@ -16,30 +16,30 @@ import com.infosys.app.service.client.DestinationDataService;
 public class DestinationController {
 
 	@Autowired
-	private DestinationDataService destinationService;
+	private DataService dataService;
 	
 	@GetMapping
 	public ResponseEntity<?> getDestinations() {
-		return destinationService.getAllDestinations();
+		return dataService.getAllDestinations();
 	}
 	
 	@GetMapping("/search/{location}")
 	public ResponseEntity<?> getLocationLike(@PathVariable String location){
-		return destinationService.getLocationLike(location);
+		return dataService.getDestinationLike(location);
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getById(@PathVariable Long id) throws ResourceNotFoundException{
-		return destinationService.getById(id);
+		return dataService.getDestinationById(id);
 	}
 	
 	@GetMapping("/code/{code}")
 	public ResponseEntity<?> getByCode(@PathVariable String code) throws ResourceNotFoundException{
-		return destinationService.getByCode(code);
+		return dataService.getDestinationByCode(code);
 	}
 	
 	@GetMapping("/accessabilities/{destId}")
 	public ResponseEntity<?> getAccessFromDestinationId(@PathVariable Long destId) {
-		return destinationService.getAccessFromDestinationId(destId);
+		return dataService.getAccessFromDestinationId(destId);
 	}
 }

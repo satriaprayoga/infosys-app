@@ -26,6 +26,6 @@ java -Djava.security.egd=file:/dev/./urandom -Dserver.port=$SERVER_PORT   \
      -Deureka.client.serviceUrl.defaultZone=$EUREKASERVER_URI             \
      -Dsecurity.oauth2.resource.userInfoUri=$USERINFO_URI               \
      -Dsecurity.oauth2.resource.tokenInfoUri=$TOKENINFO_URI               \
-     -Dspring.rabbitmq.host=$RABITMQ_URI               \
-     -Dspring.rabbitmq.port=$RABBITMQ_PORT..............\
-     -jar /usr/local/licensingservice/@project.build.finalName@.jar
+     -Dspring.rabbitmq.host=$RABBITMQ_URI               \
+     -Dspring.rabbitmq.port=$RABBITMQ_PORT              \
+     -jar /usr/local/dataserver/@project.build.finalName@.jar
