@@ -1,18 +1,28 @@
 dist: trusty
 language: java
 jdk:
-  - oraclejdk8
+- oraclejdk8
 cache:
   directories:
-    - "$HOME/.m2"
+  - "$HOME/.m2"
 sudo: required
 services:
-  - docker
+- docker
 notifications:
   email:
-    - satria.prayoga@gmail.com
+  - satria.prayoga@gmail.com
   on_success: always
   on_failure: always
 branches:
   only:
-    - master
+  - master
+before_install:
+  - gem install travis -v 1.9.0 --no-rdoc --no-ri
+  - sudo curl -o /usr/local/bin/ecs-cli/ https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest
+  - sudo chmod +x /usr/local/bin/ecs-cli
+  - export BUILD_NAME=infosysApp -$TRAVIS_BRANCH-$(date -u "+%Y%m%d%H%M%S")-$TRAVIS_BUILD_NUMBER
+env:
+  global:
+    secure: SjKhKG7ozRVirsAci4RM/cSs7Xpf2C5QKdToNfibpTvBl1kLv/9vnWKbPbOylFzPADCLwPKdVpE4Qp7idFIYM+7kFUwatLV6z/Vk3bVIQGfFFDNi3kJmG9uTErQnHSzz3u/s8PaaX70tbXqHKLuTvDZ3NHNQJrSp5vXG3niowcykgtP8XqqVugqbQspsWntU2LbR609zF1MmR/r/ulNGVEgQqgJ1u8CePtk4UIXThnUcqi6N+45dFgLOE73csTw9B8KTnLgmGKcobZqdr5zOmw2pJyIkvXygfEV49J+WWAmdlFqDScOsg2kzzCclSlVA1mHCsYP2vzYo/G3l9MSj2zEPLptpuyZSUtYE1mNhDHYtS84cw/fJmLSmOIL1J8Lqwb8q+S1ykhqpnaerzYuGh3PS7p9MKglUu5Gri8UsO+WZuT4QQBacf0yxdnEzReDjCei1gv6uT0jwE65/v/uIyFW+hMe80EPdBrpNl7uPaSANuGNU/fN9u3VrCw2mHLsxjZI4sYKqmActO48BF4+MGMmBwvAX3OZMuDQX9jCZa7NPM1bqG0w2dJqaW5onGfa7/8LvKrqXRE2Fhkb5RJwuoMxJraNrrBy0tCGfshjqv5lxLhty/sKezdiy9l/FCWA3dBISuQNTtGYYodWlWnubEwlhJe4mZbdczS8s5uLfkxU=
+scripts:
+  - sh travis_scripts/tag_build.sh
