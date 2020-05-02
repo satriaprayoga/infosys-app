@@ -18,7 +18,7 @@ branches:
   - master
 before_install:
   - gem install travis --no-document
-  - sudo curl -o /usr/local/bin/ecs-cli/ https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest
+  - sudo curl -o /usr/local/bin/ecs-cli https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest
   - sudo chmod +x /usr/local/bin/ecs-cli
   - export BUILD_NAME=infosysApp -$TRAVIS_BRANCH-$(date -u "+%Y%m%d%H%M%S")-$TRAVIS_BUILD_NUMBER
 env:
