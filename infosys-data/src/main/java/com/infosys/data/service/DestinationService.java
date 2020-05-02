@@ -15,6 +15,7 @@ import com.infosys.data.repository.DestinationRepository;
 import com.infosys.data.spec.DestinationSpecification;
 import com.infosys.data.spec.SearchCriteria;
 import com.infosys.data.spec.SearchOperation;
+import com.infosys.data.util.RandomUtils;
 
 @Service
 @Transactional
@@ -98,7 +99,7 @@ public class DestinationService extends AbstractBaseService<Destination, Long> {
 		Destination dest = null;
 		if (id == null) {
 			dest = new Destination();
-			dest.setDestinationCode(RandomUtil.generateRandomAlphabet(4));
+			dest.setDestinationCode(RandomUtils.generateRandomAlphabet(4));
 		} else {
 			dest = findOne(id).get();
 			//dest.setDestinationCode(request.getDestinationCode());

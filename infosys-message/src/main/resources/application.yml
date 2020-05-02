@@ -1,0 +1,39 @@
+server:
+  port: 8089
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+            
+spring:
+  mail:
+    host: smtp.gmail.com
+    username: gilsatpray@gmail.com
+    password: Moscow2008
+    port: 587
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+        ssl:
+          trust: smtp.gmail.com
+        auth: true
+        
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  cloud:
+    stream:
+      bindings:
+        registrationEventInput:
+          destination: registrationEvent
+          content-type: application/json
+  application:
+    name: infosys-message

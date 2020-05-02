@@ -21,7 +21,14 @@
 		<module>infosys-data</module>
 		<module>infosys-oauth</module>
 		<module>infosys-gateway</module>
-		<module>infosys-web-api</module>
+		
+
+
+		
+		<module>infosys-customer</module>
+		<module>infosys-webclient</module>
+		
+		<module>infosys-message</module>
 	</modules>
 	<build>
 		<plugins>

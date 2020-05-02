@@ -1,13 +1,13 @@
 version: '2'
 services: 
     infosys-eureka:
-        image: infosys/eureka:test
+        image: satriaprayoga/infosys-eureka:test
         mem_limit: 1073741824
         ports: 
             - "8761:8761"
 
     infosys-gateway:
-        image: infosys/gateway:test
+        image: satriaprayoga/infosys-gateway:test
         mem_limit: 1073741824
         ports: 
             - "5555:5555"
@@ -21,7 +21,7 @@ services:
             RABBITMQ_PORT: "5672"
 
     infosys-oauth:
-        image: infosys/authserver:test
+        image: satriaprayoga/infosys-authserver:test
         mem_limit: 1073741824
         ports: 
             - "8082:8082"
@@ -35,7 +35,7 @@ services:
             GATEWAYSERVER_PORT: "5555"
 
     infosys-data:
-        image: infosys/data:test
+        image: satriaprayoga/infosys-data:test
         mem_limit: 1073741824
         ports: 
             - "8083:8083"
@@ -55,7 +55,7 @@ services:
             RABBITMQ_PORT: "5672"
     
     infosys-web-api:
-        image: infosys/webapi:test
+        image: satriaprayoga/infosys-webapi:test
         mem_limit: 1073741824
         ports:
             - "9001:9001"

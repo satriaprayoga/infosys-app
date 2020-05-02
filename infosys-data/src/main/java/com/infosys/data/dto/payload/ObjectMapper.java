@@ -22,7 +22,7 @@ import com.infosys.data.repository.DestinationRepository;
 import com.infosys.data.repository.LandmarkRepository;
 import com.infosys.data.repository.TourGroupRepository;
 import com.infosys.data.repository.TourPackageRepository;
-import com.infosys.data.service.RandomUtil;
+import com.infosys.data.util.RandomUtils;
 
 @Component
 public class ObjectMapper {
@@ -113,7 +113,7 @@ public class ObjectMapper {
 			dest.setEmail(request.getEmail());
 			dest.setLocation(request.getLocation());
 			dest.setPhone(request.getPhone());
-			dest.setDestinationCode(RandomUtil.generateRandomAlphabet(5));
+			dest.setDestinationCode(RandomUtils.generateRandomAlphabet(5));
 			return dest;
 		});
 	}

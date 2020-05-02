@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: 8088
 eureka:
   instance:
     prefer-ip-address: true
@@ -11,6 +11,9 @@ eureka:
       
 security:
   oauth2:
+    client:
+      client-id: infosysBackend
+      client-secret: p4l4Wi7a
     resource:
       token-info-uri: http://localhost:8082/oauth/check_token/
       user-info-uri: http://localhost:8082/user/
