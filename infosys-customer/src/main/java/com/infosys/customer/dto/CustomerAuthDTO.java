@@ -17,6 +17,7 @@ public class CustomerAuthDTO implements Serializable{
 	private String username;
 	private String password;
 	private boolean enabled;
+	private String activationKey;
 	
 	public static CustomerAuthDTO create(Customer c) {
 		CustomerAuthDTO dto=new CustomerAuthDTO();
@@ -25,6 +26,7 @@ public class CustomerAuthDTO implements Serializable{
 		dto.setUsername(c.getUsername());
 		dto.setPassword(c.getPassword());
 		dto.setEnabled(c.isEnabled());
+		dto.setActivationKey(c.getActivationKey());
 		return dto;
 	}
 }

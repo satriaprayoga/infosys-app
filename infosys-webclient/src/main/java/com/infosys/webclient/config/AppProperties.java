@@ -15,6 +15,7 @@ public class AppProperties {
 	public static class Auth {
 		private String tokenSecret;
 		private long tokenExpirationMsec;
+		private long tokenExpirationMsecRememberMe;
 		
 		public void setTokenExpirationMsec(long tokenExpirationMsec) {
 			this.tokenExpirationMsec = tokenExpirationMsec;
@@ -22,6 +23,14 @@ public class AppProperties {
 		
 		public void setTokenSecret(String tokenSecret) {
 			this.tokenSecret = tokenSecret;
+		}
+		
+		public void setTokenExpirationMsecRememberMe(long tokenExpirationMsecRememberMe) {
+			this.tokenExpirationMsecRememberMe = tokenExpirationMsecRememberMe;
+		}
+		
+		public long getTokenExpirationMsecRememberMe() {
+			return tokenExpirationMsecRememberMe;
 		}
 
 		public long getTokenExpirationMsec() {

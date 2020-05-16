@@ -11,6 +11,7 @@ public class RegistrationEvent{
 	public final static String RESET_PASSWORD="RESET_PASSWORD";
 
 	private String id;
+	private String name;
 	private String email;
 	private String key;
 	private String confirmUrl;

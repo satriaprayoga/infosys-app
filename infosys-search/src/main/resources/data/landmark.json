@@ -1,0 +1,35 @@
+[
+	{
+		"landmark":"Gua Jepang",
+		"description":"built by VOC, used by Kenpetai",
+		"destination":"Baluran Sabana Park",
+		"destinationCode":"BLRN",
+		"hour":1,
+		"minute":20
+	},
+	{
+		"landmark":"Taman Nasional Baluran",
+		"description":"Great Savana on Java",
+		"destination":"Baluran Sabana Park",
+		"destinationCode":"BLRN",
+		"hour":1,
+		"minute":20
+	},
+	{
+		"landmark":"Pantai Bama",
+		"description":"This is Bama, not Bahama",
+		"destination":"Baluran Sabana Park",
+		"destinationCode":"BLRN",
+		"hour":1,
+		"minute":20
+	},
+
+	{
+		"landmark":"Talempong Waterfall",
+		"description":"When the water fall to Talempong",
+		"destination":"Baluran Sabana Park",
+		"destinationCode":"BLRN",
+		"hour":1,
+		"minute":20
+	}
+]

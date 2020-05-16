@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -73,8 +74,8 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String token = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(new AuthResponse(token));
+        String token = tokenProvider.generateToken(authentication,loginRequest.isRememberMe());
+        return ResponseEntity.ok(new AuthResponse(token,loginRequest.isRememberMe()));
     }
 	
 	@PostMapping("/register")
@@ -86,6 +87,7 @@ public class AuthController {
 		if(dto.getStatusCode()==HttpStatus.OK) {
 			CustomerDTO cdto=dto.getBody();
 			RegistrationEvent event=new RegistrationEvent(cdto.getId(), cdto.getEmail(), cdto.getActivationKey(), request.getActivationUrl());
+			event.setName(cdto.getUsername());
 			event.setType(RegistrationEvent.ACTIVATION);
 			eventPublisher.publishRegistrationEvent(event);
 		}
@@ -102,6 +104,11 @@ public class AuthController {
 	@GetMapping("/email")
 	public ApiResponse findByEmail(@RequestParam String email) {
 		return new ApiResponse(HttpStatus.OK, customerService.findByEmail(email));
+	}
+	
+	@GetMapping("/success/{id}")
+	public ApiResponse findById(@PathVariable String id) {
+		return new ApiResponse(HttpStatus.OK, customerService.findById(id));
 	}
 	
 	@PutMapping("/activate")

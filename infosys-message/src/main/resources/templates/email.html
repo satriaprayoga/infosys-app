@@ -3,16 +3,26 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ASFIM Email</title>
+    <title>Infosys Registration Activation</title>
+     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+
+    <!-- use the font -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 48px;
+        }
+    </style>
 </head>
 <body>
-    <table>
-        <tbody>
-            <tr>
-                <td>Message: </td>
-                <td><p th:text="|${message}|">Hello</p></td>
-            </tr>
-        </tbody>
-    </table>
+    <p th:text="${'Hi,' + name +'!'}"></p>
+    <p>
+      You have been successfully registered to the <b>Infosys App</b> on
+      <span th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}"></span>
+    </p>
+    <p>
+      Please, activate your account by click the link below
+    </p>
+    <a th:href="@{${confirmUrl}}">Activation</a>
 </body>
 </html>

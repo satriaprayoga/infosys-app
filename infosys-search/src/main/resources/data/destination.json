@@ -1,0 +1,26 @@
+[
+	{
+		"destination":"Baluran Sabana Park",
+		"location":"Situbondo, East Java",
+		"description":"Savanna on Java",
+		"code":"BLRN",
+		"company":"PT Baluran Wisata",
+		"phone":"029123123",
+		"email":"baluran@mail.com",
+		"accessabilities":[
+			"10 km and 1 hour from posyandu"
+		]
+	},
+	{
+		"destination":"Komodo Island Paradise",
+		"location":"Labuanbajo, NTT",
+		"description":"Ancient Dragon Human Slayer",
+		"code":"KIPR",
+		"company":"PT Komodo Wisata",
+		"phone":"029123123",
+		"email":"baluran@mail.com",
+		"accessabilities":[
+			"10 km and 1 hour from posyandu"
+		]
+	}
+]

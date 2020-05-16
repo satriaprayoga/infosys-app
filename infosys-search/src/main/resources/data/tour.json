@@ -1,0 +1,60 @@
+[
+	{
+		"destination": "Baluran Sabana Park",
+		"destinationId": "BLRN",
+		"location": "Situbondo, East Java",
+		"landmarks": [
+			"Gua Jepang",
+			"Taman Nasional Baluran"
+		],
+		"group": "Paket Family",
+		"name": "Paket A",
+		"accomodationIncluded": true,
+		"published": true,
+		"unit": "person",
+		"price": "750000",
+		"minOrder": 2,
+		"capacity": 60,
+		"day": 2,
+		"night": 1
+	},
+	{
+		"destination": "Baluran Sabana Park",
+		"destinationId": "BLRN",
+		"location": "Situbondo, East Java",
+		"landmarks": [
+			"Pantai Bama",
+			"Gua Jepang"
+		],
+		"group": "Paket Family",
+		"name": "Paket B",
+		"accomodationIncluded": true,
+		"published": true,
+		"unit": "person",
+		"price": "750000",
+		"minOrder": 2,
+		"capacity": 60,
+		"day": 2,
+		"night": 1
+	},
+	{
+		"destination": "Baluran Sabana Park",
+		"destinationId": "BLRN",
+		"location": "Situbondo, East Java",
+		"landmarks": [
+			"Taman Nasional Baluran",
+			"Pantai Bama",
+			"Gua Jepang"
+		],
+		"group": "Paket Hemat",
+		"name": "Paket A",
+		"accomodationIncluded": true,
+		"published": true,
+		"unit": "person",
+		"price": "250000",
+		"minOrder": 1,
+		"capacity": 6,
+		"day": 2,
+		"night": 1
+	}
+]

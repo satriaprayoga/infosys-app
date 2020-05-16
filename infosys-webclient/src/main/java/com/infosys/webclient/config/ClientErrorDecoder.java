@@ -17,7 +17,7 @@ public class ClientErrorDecoder implements ErrorDecoder{
 		case 401:
 			return new UnauthorizedException("Unauthorized");
 		case 404:
-			return new ResourceNotFoundException(null, "Resource Not found","");
+			return new ResourceNotFoundException(Object.class, "Resource Not found","");
 
 		default:
 			return new BadRequestException("bad request");

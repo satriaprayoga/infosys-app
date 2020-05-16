@@ -38,7 +38,6 @@ public class CustomerController {
 		dto.setId(principal.getId());
 		dto.setUsername(principal.getUsername());
 		dto.setEmail(principal.getEmail());
-		dto.setPassword("");
 		dto.setEnabled(principal.isEnabled());
 		return new ApiResponse(HttpStatus.OK, dto);
 	}

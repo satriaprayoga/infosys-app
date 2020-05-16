@@ -40,12 +40,19 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter{
 					UsernamePasswordAuthenticationToken auth=new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());
 					auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(auth);
+					filterChain.doFilter(request, response);
 				}
+			}else {
+				 SecurityContextHolder.clearContext();
+			      filterChain.doFilter(request, response);
+			      return;
 			}
 		}catch (Exception e) {
 			log.error(e.getLocalizedMessage());
+		}finally {
+			SecurityContextHolder.clearContext();
 		}
-		filterChain.doFilter(request, response);
+		
 	}
 	
 	private String getJwtFromRequest(HttpServletRequest request) {

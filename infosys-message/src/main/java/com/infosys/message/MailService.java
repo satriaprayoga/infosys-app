@@ -23,6 +23,8 @@ public class MailService {
 	
 	public void sendRegistrationEmail(RegistrationEvent event) {
 		final Context context=new Context();
+		context.setVariable("name", event.getName());
+		context.setVariable("confirmUrl", event.getConfirmUrl()+event.getId());
 		context.setVariable("message", "Your activation key is: "+event.getKey());
 		String body=templateEngine.process("email", context);
 		try {

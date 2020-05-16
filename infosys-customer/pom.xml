@@ -7,11 +7,13 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
   <artifactId>infosys-customer</artifactId>
-  <name>com.infosys.customer</name>
+  <name>infosys-customer</name>
    <groupId>com.infosys</groupId>
    <properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+		<docker.image.name>infosys/infosys-customer</docker.image.name>
+		<docker.image.tag>${env.BUILD_NAME}</docker.image.tag>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -114,7 +116,7 @@
              <artifactId>docker-maven-plugin</artifactId>
              <version>1.2.2</version>
              <configuration>
-                 <imageName>infosys-customer:test</imageName>
+				 <imageName>${docker.image.name}:${docker.image.tag}</imageName>
                  <dockerDirectory>${basedir}/target/dockerfile</dockerDirectory>
                  <resources>
                      <resource>

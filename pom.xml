@@ -17,18 +17,14 @@
 		<spring-cloud.version>Hoxton.SR3</spring-cloud.version>
 	</properties>
 	<modules>
-		<module>infosys-eureka</module>
-		<module>infosys-data</module>
+		<module>infosys-eureka</module>		
 		<module>infosys-oauth</module>
 		<module>infosys-gateway</module>
-		
-
-
-		
 		<module>infosys-customer</module>
 		<module>infosys-webclient</module>
-		
 		<module>infosys-message</module>
+		<module>infosys-search</module>
+		<module>infosys-destination</module>
 	</modules>
 	<build>
 		<plugins>

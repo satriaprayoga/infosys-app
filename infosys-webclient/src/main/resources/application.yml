@@ -26,7 +26,8 @@ spring:
 app:
   auth:
     tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
-    tokenExpirationMsec: 864000000
+    tokenExpirationMsec: 86400
+    tokenExpirationMsecRememberMe: 2592000
   client:
     gateway: http://localhost:5555
     uri: http://localhost:8082/oauth/token

@@ -14,6 +14,7 @@ import com.infosys.webclient.dto.payload.ActivationRequest;
 import com.infosys.webclient.dto.payload.ChangePasswordRequest;
 import com.infosys.webclient.dto.payload.CustomerInfoRequest;
 import com.infosys.webclient.dto.payload.CustomerRequest;
+import com.infosys.webclient.exceptions.ResourceNotFoundException;
 import com.infosys.webclient.service.clients.CustomerDataService;
 
 @Service
@@ -40,11 +41,19 @@ public class CustomerService {
 	}
 	
 	public CustomerAuthDTO findById(String id) {
-		return customerDataService.findById(id).getBody();
+		CustomerAuthDTO dto=customerDataService.findById(id).getBody();
+		if(dto==null) {
+			throw new ResourceNotFoundException(CustomerAuthDTO.class, "id");
+		}
+		return dto;
 	}
 	
 	public CustomerAuthDTO findByEmail(String email) {
-		return customerDataService.findByEmail(email).getBody();
+		CustomerAuthDTO dto=customerDataService.findByEmail(email).getBody();
+		if(dto==null) {
+			throw new ResourceNotFoundException(CustomerAuthDTO.class, "email");
+		}
+		return dto;
 	}
 	
 	public CustomerActivationDTO activate(ActivationRequest request) {

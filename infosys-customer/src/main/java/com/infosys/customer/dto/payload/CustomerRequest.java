@@ -15,17 +15,17 @@ public class CustomerRequest {
 	private String username;
 	@NotNull
 	private String password;
-	@NotNull
+
 	private String country;
-	@NotNull
+	
 	private String state;
-	@NotNull
+
 	private String city;
-	@NotNull
+	
 	private String zipCode;
-	@NotNull
+	
 	private String address;
-	@NotNull
+	
 	private String phone;
 	
 	private String providerId;

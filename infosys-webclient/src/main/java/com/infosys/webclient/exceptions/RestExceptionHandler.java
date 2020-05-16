@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -64,15 +65,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 	
-	@ExceptionHandler(UnauthorizedException.class)
-	protected ResponseEntity<Object> handleUnauthorizedException(UnauthorizedException ex){
+	@ExceptionHandler(AuthenticationException.class)
+	protected ResponseEntity<Object> handleUnauthorizedException(AuthenticationException ex){
 		ApiError apiError=new ApiError(UNAUTHORIZED);
 		apiError.setMessage(ex.getMessage());
 		return buildResponseEntity(apiError);
 	}
 	
 	private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
-		return new ResponseEntity<>(apiError, apiError.getStatus());
+		return new ResponseEntity<>(apiError, HttpStatus.valueOf(apiError.getStatus()));
 	}
 
 }

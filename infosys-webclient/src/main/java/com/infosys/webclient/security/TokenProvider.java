@@ -25,11 +25,19 @@ public class TokenProvider {
 	@Autowired
 	private AppProperties appProperties;
 
-	public String generateToken(Authentication authentication) {
+	public String generateToken(Authentication authentication,boolean rememberMe) {
 		UserPrincipal principal=(UserPrincipal)authentication.getPrincipal();
 		Date now=new Date();
-		Date expiryDate=new Date(now.getTime()+appProperties.getAuth().getTokenExpirationMsec());
+		Date expiryDate=null;
+		long expirateLong=0L;
+		if(rememberMe) {
+			expirateLong=appProperties.getAuth().getTokenExpirationMsecRememberMe()*1000;
 		
+		}else {
+			expirateLong=appProperties.getAuth().getTokenExpirationMsec()*1000;
+			
+		}
+		expiryDate=new Date(now.getTime()+expirateLong);
 		return Jwts.builder().setSubject(principal.getId())
 							 .setIssuedAt(now)
 							 .setExpiration(expiryDate)
