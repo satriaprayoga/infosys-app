@@ -37,4 +37,4 @@ java -Djava.security.egd=file:/dev/./urandom -Dserver.port=$SERVER_PORT   \
      -Dspring.rabbitmq.host=$RABBITMQ_URI               \
      -Dspring.rabbitmq.port=$RABBITMQ_PORT              \
      -Dsearch.elasticsearchUri=$ELASTICSEARCH_URI:$ELASTICSEARCH_PORT   \
-     -jar /usr/local/messageserver/@project.build.finalName@.jar
+     -jar /usr/local/searchserver/@project.build.finalName@.jar
