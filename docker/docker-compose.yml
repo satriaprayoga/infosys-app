@@ -98,5 +98,21 @@ services:
             RABBITMQ_URI: "rabbitmq"
             RABBITMQ_PORT: "5672"    
     
-
+    infosys-webclient:
+        image: satriaprayoga/infosys-webclient:${BUILD_NAME}
+        mem_limit: 2073741824
+        ports:
+            - "9001:9001"
+        links: 
+            - "infosys-eureka:infosys-eureka"
+            - "infosys-gateway:infosys-gateway"
+            - "infosys-oauth:infosys-oauth"
+            - "infosys-customer:infosys-customer"
+            - "rabbitmq:rabbitmq"
+        environment: 
+            SERVER_PORT: "9001"
+            EUREKASERVER_URI: "http://infosys-eureka:8761/eureka"
+            EUREKASERVER_PORT: "8761"
+            GATEWAYSERVER_PORT: "5555"
+            TOKENINFO_URI: "http://infosys-oauth:8082/oauth/token"
     
