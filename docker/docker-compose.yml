@@ -1,7 +1,4 @@
 version: '2'
-volumes: 
-    elasticsearch-data:
-
 services: 
     rabbitmq:
         image: rabbitmq:3-management-alpine
