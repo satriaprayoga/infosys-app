@@ -86,15 +86,12 @@ services:
         links: 
             - "infosys-eureka:infosys-eureka"
             - "infosys-gateway:infosys-gateway"
-            - "infosys-oauth:infosys-oauth"
             - "rabbitmq:rabbitmq"
         environment: 
             SERVER_PORT: "8085"
             EUREKASERVER_URI: "http://infosys-eureka:8761/eureka"
             EUREKASERVER_PORT: "8761"
             GATEWAYSERVER_PORT: "5555"
-            USERINFO_URI: "http://infosys-oauth:8082/user/"
-            TOKENINFO_URI: "http://infosys-oauth:8082/oauth/check_token/"
             RABBITMQ_URI: "rabbitmq"
             RABBITMQ_PORT: "5672"    
     
