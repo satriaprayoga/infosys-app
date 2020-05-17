@@ -7,9 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
@@ -21,8 +19,8 @@ import com.infosys.search.service.DestinationService;
 import com.infosys.search.service.LandmarkService;
 import com.infosys.search.service.TourService;
 
-@Component
-public class DataInitializer implements CommandLineRunner {
+
+public class DataInitializer {
 
 	@Value("classpath:data/tour.json")
 	private Resource tourJsonFile;
@@ -42,7 +40,6 @@ public class DataInitializer implements CommandLineRunner {
 	@Autowired
 	private LandmarkService landmarkService;
 
-	@Override
 	public void run(String... args) throws Exception {
 //		if (this.isInitialized()) {
 //			return;

@@ -10,12 +10,6 @@ while ! `nc -z infosys-eureka  $(getPort $EUREKASERVER_PORT)`; do sleep 3; done
 echo "******* Eureka Server has started"
 
 echo "********************************************************"
-echo "Waiting for the rabbitmq server to start on port $(getPort $RABBITMQ_PORT)"
-echo "********************************************************"
-while ! `nc -z elasticsearch  $(getPort $ELASTICSEARCH_PORT)`; do sleep 3; done
-echo "******* ElasticSearch Server has started"
-
-echo "********************************************************"
 echo "Starting Search Server with Configuration Service via Eureka :  $EUREKASERVER_URI:$SERVER_PORT"
 echo "********************************************************"
 
