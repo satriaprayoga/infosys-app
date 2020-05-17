@@ -1,38 +1,19 @@
 version: '2'
+volumes: 
+    elasticsearch-data:
+
 services: 
     rabbitmq:
         image: rabbitmq:3-management-alpine
         ports:
             - "5672:5672"
             - "15672:15672"
-
-    elasticsearch:
-        image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
-        container_name: elasticsearch
-        environment:
-            - xpack.security.enabled=false
-            - discovery.type=single-node
-        ulimits:
-            memlock:
-            soft: -1
-            hard: -1
-            nofile:
-            soft: 65536
-            hard: 65536
-        cap_add:
-            - IPC_LOCK
-        volumes:
-            - elasticsearch-data:/usr/share/elasticsearch/data
-        ports:
-            - 9200:9200
-            - 9300:9300
-
     infosys-eureka:
         image: satriaprayoga/infosys-eureka:${BUILD_NAME}
         mem_limit: 1073741824
         ports: 
             - "8761:8761"
-
+    
     infosys-gateway:
         image: satriaprayoga/infosys-gateway:${BUILD_NAME}
         mem_limit: 1073741824
@@ -46,7 +27,7 @@ services:
             EUREKASERVER_URI: "http://infosys-eureka:8761/eureka"
             EUREKASERVER_PORT: "8761"
             RABBITMQ_PORT: "5672"
-
+    
     infosys-message:
         image: satriaprayoga/infosys-oauth:${BUILD_NAME}
         mem_limit: 1073741824
@@ -63,8 +44,8 @@ services:
             GATEWAYSERVER_PORT: "5555"
             RABBITMQ_URI: "rabbitmq"
             RABBITMQ_PORT: "5672"
-
-
+    
+    
     infosys-oauth:
         image: satriaprayoga/infosys-oauth:${BUILD_NAME}
         mem_limit: 1073741824
@@ -78,7 +59,7 @@ services:
             EUREKASERVER_URI: "http://infosys-eureka:8761/eureka"
             EUREKASERVER_PORT: "8761"
             GATEWAYSERVER_PORT: "5555"
-
+    
     infosys-destination:
         image: satriaprayoga/infosys-destination:${BUILD_NAME}
         mem_limit: 1073741824
@@ -88,6 +69,7 @@ services:
             - "infosys-eureka:infosys-eureka"
             - "infosys-gateway:infosys-gateway"
             - "infosys-oauth:infosys-oauth"
+            - "infosys-message:infosys-message"
             - "rabbitmq:rabbitmq"
         environment: 
             SERVER_PORT: "8083"
@@ -98,7 +80,7 @@ services:
             TOKENINFO_URI: "http://infosys-oauth:8082/oauth/check_token/"
             RABBITMQ_URI: "rabbitmq"
             RABBITMQ_PORT: "5672"
-
+    
     infosys-customer:
         image: satriaprayoga/infosys-customer:${BUILD_NAME}
         mem_limit: 1073741824
@@ -108,6 +90,7 @@ services:
             - "infosys-eureka:infosys-eureka"
             - "infosys-gateway:infosys-gateway"
             - "infosys-oauth:infosys-oauth"
+            - "infosys-message:infosys-message"
             - "rabbitmq:rabbitmq"
         environment: 
             SERVER_PORT: "8084"
@@ -127,17 +110,18 @@ services:
         links: 
             - "infosys-eureka:infosys-eureka"
             - "infosys-gateway:infosys-gateway"
+            - "infosys-oauth:infosys-oauth"
+            - "infosys-message:infosys-message"
             - "rabbitmq:rabbitmq"
-            - "elasticsearch:elasticsearch"
         environment: 
             SERVER_PORT: "8085"
             EUREKASERVER_URI: "http://infosys-eureka:8761/eureka"
             EUREKASERVER_PORT: "8761"
             GATEWAYSERVER_PORT: "5555"
+            USERINFO_URI: "http://infosys-oauth:8082/user/"
+            TOKENINFO_URI: "http://infosys-oauth:8082/oauth/check_token/"
             RABBITMQ_URI: "rabbitmq"
             RABBITMQ_PORT: "5672"    
-            ELASTICSEARCH_URI: "elasticsearch"
-            ELASTICSEARCH_PORT: "9200"
     
     infosys-webclient:
         image: satriaprayoga/infosys-webclient:${BUILD_NAME}
@@ -147,14 +131,12 @@ services:
         links: 
             - "infosys-eureka:infosys-eureka"
             - "infosys-gateway:infosys-gateway"
-            - "infosys-oauth:infosys-oauth"
             - "infosys-customer:infosys-customer"
+            - "infosys-message:infosys-message"
             - "rabbitmq:rabbitmq"
         environment: 
             SERVER_PORT: "9001"
             EUREKASERVER_URI: "http://infosys-eureka:8761/eureka"
             EUREKASERVER_PORT: "8761"
             GATEWAYSERVER_PORT: "5555"
-            TOKENINFO_URI: "http://infosys-oauth:8082/oauth/token"
-            
     

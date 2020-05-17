@@ -22,5 +22,7 @@ spring:
           destination: tourEvent
           content-type: application/json
 search:
-  elasticsearch-uri: 192.168.99.100:9200
+  elasticsearch-uri: https://search-infosys-fjdc7dl4ismojlyb47lubbitsm.ap-southeast-1.es.amazonaws.com:443
+  username: admin
+  password: Moscow2008_
 

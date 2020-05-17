@@ -48,14 +48,22 @@ public class DataInitializer implements CommandLineRunner {
 //			return;
 //		}
 //
-		List<Tour> tours = this.loadTourFromFile();
-		tours.forEach(tourService::create);
+		if(destinationService.count()>0) {
+			List<Tour> tours = this.loadTourFromFile();
+			tours.forEach(tourService::create);
+		}
 		
-		List<Destination> dest=this.loadDestinationfromfile();
-		dest.forEach(destinationService::create);
+		if(landmarkService.count()>0) {
+			List<Landmark> land=this.loadLandmarkfromfile();
+			land.forEach(landmarkService::create);
+		}
+		if(tourService.count()>0) {
+			List<Destination> dest=this.loadDestinationfromfile();
+			dest.forEach(destinationService::create);
+		}
+		
 	
-List<Landmark> land=this.loadLandmarkfromfile();
-land.forEach(landmarkService::create);
+
 
 	}
 
@@ -143,8 +151,6 @@ land.forEach(landmarkService::create);
 		return tour;
 	}
 
-	private boolean isInitialized() {
-		return this.tourService.count() > 0 && this.destinationService.count()>0;
-	}
+	
 
 }

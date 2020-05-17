@@ -2,6 +2,7 @@ package com.infosys.search.config;
 
 import java.io.IOException;
 
+import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,8 +36,12 @@ public class ElasticsearchConfig extends AbstractElasticsearchConfiguration{
 
 	@Bean
 	public RestHighLevelClient elasticsearchClient() {
-		ClientConfiguration clientConfiguration=ClientConfiguration.builder()
-												.connectedTo(searchProperties.getElasticsearchUri())
+		//InetSocketAddress endpoint=new InetSocketAddress("", 443);
+		ClientConfiguration clientConfiguration=ClientConfiguration
+				.builder()
+				.connectedTo(HttpHost.create(searchProperties.getElasticsearchUri()).toHostString())
+				.usingSsl()
+				.withBasicAuth(searchProperties.getUsername(), searchProperties.getPassword())
 												.build();
 		return RestClients.create(clientConfiguration).rest();
 	}

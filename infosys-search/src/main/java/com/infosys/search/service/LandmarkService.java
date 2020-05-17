@@ -27,4 +27,8 @@ public class LandmarkService extends AbstractBaseService<Landmark, String>{
 	public List<Landmark> findByDestinationCode(String destinationCode){
 		return landmarkRepository.findByDestinationCode(destinationCode);
 	}
+	
+	public long count() {
+		return landmarkRepository.count();
+	}
 }
