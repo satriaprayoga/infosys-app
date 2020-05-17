@@ -7,13 +7,13 @@ services:
             - "5672:5672"
             - "15672:15672"
     infosys-eureka:
-        image: satriaprayoga/infosys-eureka:infosysApp-master-20200517160650-14
+        image: satriaprayoga/infosys-eureka:${BUILD_NAME}
         mem_limit: 1073741824
         ports: 
             - "8761:8761"
     
     infosys-gateway:
-        image: satriaprayoga/infosys-gateway:infosysApp-master-20200517160650-14
+        image: satriaprayoga/infosys-gateway:${BUILD_NAME}
         mem_limit: 1073741824
         ports: 
             - "5555:5555"
@@ -27,7 +27,7 @@ services:
             RABBITMQ_PORT: "5672"
     
     infosys-message:
-        image: satriaprayoga/infosys-oauth:infosysApp-master-20200517160650-14
+        image: satriaprayoga/infosys-oauth:${BUILD_NAME}
         mem_limit: 1073741824
         ports: 
             - "8081:8081"
@@ -45,7 +45,7 @@ services:
     
     
     infosys-oauth:
-        image: satriaprayoga/infosys-oauth:infosysApp-master-20200517160650-14
+        image: satriaprayoga/infosys-oauth:${BUILD_NAME}
         mem_limit: 1073741824
         ports: 
             - "8082:8082"
@@ -58,10 +58,28 @@ services:
             EUREKASERVER_PORT: "8761"
             GATEWAYSERVER_PORT: "5555"
     
-     
+    infosys-customer:
+        image: satriaprayoga/infosys-customer:${BUILD_NAME}
+        mem_limit: 1073741824
+        ports: 
+            - "8084:8084"
+        links: 
+            - "infosys-eureka:infosys-eureka"
+            - "infosys-gateway:infosys-gateway"
+            - "infosys-oauth:infosys-oauth"
+            - "rabbitmq:rabbitmq"
+        environment: 
+            SERVER_PORT: "8084"
+            EUREKASERVER_URI: "http://infosys-eureka:8761/eureka"
+            EUREKASERVER_PORT: "8761"
+            GATEWAYSERVER_PORT: "5555"
+            USERINFO_URI: "http://infosys-oauth:8082/user/"
+            TOKENINFO_URI: "http://infosys-oauth:8082/oauth/check_token/"
+            RABBITMQ_URI: "rabbitmq"
+            RABBITMQ_PORT: "5672"    
             
     infosys-search:
-        image: satriaprayoga/infosys-search:infosysApp-master-20200517160650-14
+        image: satriaprayoga/infosys-search:${BUILD_NAME}
         mem_limit: 1073741824
         ports: 
             - "8085:8085"
@@ -80,5 +98,21 @@ services:
             RABBITMQ_URI: "rabbitmq"
             RABBITMQ_PORT: "5672"    
     
-    
+    infosys-webclient:
+        image: satriaprayoga/infosys-webclient:${BUILD_NAME}
+        mem_limit: 2073741824
+        ports:
+            - "9001:9001"
+        links: 
+            - "infosys-eureka:infosys-eureka"
+            - "infosys-gateway:infosys-gateway"
+            - "infosys-oauth:infosys-oauth"
+            - "infosys-customer:infosys-customer"
+            - "rabbitmq:rabbitmq"
+        environment: 
+            SERVER_PORT: "9001"
+            EUREKASERVER_URI: "http://infosys-eureka:8761/eureka"
+            EUREKASERVER_PORT: "8761"
+            GATEWAYSERVER_PORT: "5555"
+            TOKENINFO_URI: "http://infosys-oauth:8082/oauth/token"
     
