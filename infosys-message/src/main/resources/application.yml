@@ -11,15 +11,18 @@ eureka:
             
 spring:
   mail:
-    host: smtp.mailtrap.io
-    username: cc2b9138408642
-    password: 0cb3a55f368c3a
-    port: 2525
+    host: smtp.gmail.com
+    username: gilsatpray@gmail.com
+    password: oolwyzjyzezzqjoy
+    port: 587
     properties:
       mail:
         smtp:
           starttls:
             enable: true
+        ssl:
+          trust: smtp.gmail.com
+        auth: true
         
   rabbitmq:
     host: localhost
