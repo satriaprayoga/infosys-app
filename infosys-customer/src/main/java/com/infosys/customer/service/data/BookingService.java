@@ -57,6 +57,24 @@ public class BookingService extends AbstractBaseService<Booking, String>{
 		return bookingRepository.findByCustomer(customer);
 	}
 	
+	public Booking initBooking(BookingRequest request) {
+		Booking booking = new Booking();
+		booking.setDestination(request.getDestination());
+		booking.setPackageGroup(request.getPackageGroup());
+		booking.setPackageId(request.getPackageId());
+		booking.setPackageName(request.getPackageName());
+		booking.setAdults(request.getAdults());
+		booking.setCheckin(request.getCheckin());
+		booking.setStatus(BookingStatus.CREATED);
+		booking.setDay(request.getDay());
+		booking.setNight(request.getNight());
+		booking.setGrossAmount(request.getGrossAmount());
+		StringBuffer buffer=new StringBuffer();
+		buffer.append("IB-").append(RandomUtils.generateRandomAlphabet(6));
+		booking.setCode(buffer.toString());
+		return super.create(booking);
+	}
+	
 	public Booking bookTour(BookingRequest request) {
 		Optional<Customer> customer=customerRepository.findById(request.getCustomerId());
 		if(customer.isPresent()) {
@@ -78,6 +96,11 @@ public class BookingService extends AbstractBaseService<Booking, String>{
 			StringBuffer buffer=new StringBuffer();
 			buffer.append("IB-").append(RandomUtils.generateRandomAlphabet(6));
 			booking.setCode(buffer.toString());
+			booking.setEmail(request.getEmail());
+			booking.setPhone(request.getPhone());
+			booking.setName(request.getName());
+			booking.setBillingAddress(request.getBillingAddress());
+			booking.setAddress(request.getBillingAddress());
 			return super.create(booking);
 		}else {
 			throw new ResourceNotFoundException(Customer.class,"id", request.getCustomerId());
@@ -110,6 +133,7 @@ public class BookingService extends AbstractBaseService<Booking, String>{
 				pd.setCvv(request.getCvv());
 				pd.setValidUntil(request.getValidUntil());
 			}
+			pd.setTotalAmount(request.getTotalAmount());
 			pd.setBooking(b);
 			b.setPaymentDetails(pd);
 			return super.save(b);

@@ -40,6 +40,10 @@ public class CustomerService {
 		return customerDataService.existsByEmail(email).getBody();
 	}
 	
+	public Boolean isProfileCompleted(String id) {
+		return customerDataService.isProfileCompleted(id).getBody();
+	}
+	
 	public CustomerAuthDTO findById(String id) {
 		CustomerAuthDTO dto=customerDataService.findById(id).getBody();
 		if(dto==null) {

@@ -35,5 +35,8 @@ spring:
         registrationEventInput:
           destination: registrationEvent
           content-type: application/json
+        bookingEventInput:
+          destination: bookingEvent
+          content-type: application/json
   application:
     name: infosys-message

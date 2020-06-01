@@ -87,4 +87,9 @@ public class CustomerController {
 	public ResponseEntity<Boolean> isActivationExpired(@PathVariable String id){
 		return new ResponseEntity<Boolean>(customerService.isActivationExipred(id), HttpStatus.OK);
 	}
+	
+	@GetMapping("/{id}/profileCompleted")
+	public ResponseEntity<Boolean> isProfileCompleted(@PathVariable String id){
+		return new ResponseEntity<Boolean>(customerService.isProfileCompleted(id), HttpStatus.OK);
+	}
 }

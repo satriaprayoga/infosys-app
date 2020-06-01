@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Infosys Registration Activation</title>
+     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+
+    <!-- use the font -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 48px;
+        }
+    </style>
+</head>
+<body>
+    <p th:text="${'Hi,' + name +'!'}"></p>
+    <p>
+      You have been booked a tour in <b>Infosys App</b> on
+      <span th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}"></span>
+    </p>
+    <p>This is Your Book Detail</p>
+    <ul>
+    	<li><p th:text="${'Booking code: ' + bookingCode}"></p></li>
+    	<li><p th:text="${'Billing Address: ' + billingAddress}"></p></li>
+    	<li><p th:text="${'package: ' + packageName}"></p></li>
+    	<li><p th:text="${'total: ' + totalAmount}"></p></li>
+    </ul>
+    <p th:text="${' Please, Transfer to : ' + bankAccount}"></p><p>within 24 hours after you received this email.</p>
+   
+</body>
+</html>

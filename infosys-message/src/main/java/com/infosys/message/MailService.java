@@ -7,6 +7,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+
+import com.infosys.message.event.BookingEvent;
 import com.infosys.message.event.RegistrationEvent;
 
 @Service
@@ -32,6 +34,27 @@ public class MailService {
 	        MimeMessageHelper helper = new MimeMessageHelper(mail, true);
 	        helper.setTo(event.getEmail());
 	        helper.setSubject("Infosys App");
+	        helper.setText(body, true);
+	        mailSender.send(mail);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendInvoiceEmail(BookingEvent event) {
+		final Context context=new Context();
+		context.setVariable("name", event.getName());
+		context.setVariable("bookingCode", event.getBookingCode());
+		context.setVariable("billingAddress", event.getBillingAddress());
+		context.setVariable("packageName", event.getPackageName());
+		context.setVariable("totalAmount", event.getTotalAmount());
+		context.setVariable("bankAccount", event.getBankAccount());
+		String body=templateEngine.process("booking", context);
+		try {
+			MimeMessage mail = mailSender.createMimeMessage();
+	        MimeMessageHelper helper = new MimeMessageHelper(mail, true);
+	        helper.setTo(event.getEmail());
+	        helper.setSubject("Infosys App - Booking Information");
 	        helper.setText(body, true);
 	        mailSender.send(mail);
 		}catch(Exception e) {

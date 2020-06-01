@@ -112,5 +112,11 @@ public class CustomerService extends AbstractBaseService<Customer, String> {
 			throw new ResourceNotFoundException(Customer.class, "id", id);
 		});
 	}
+	
+	@Transactional(readOnly = true)
+	public Boolean isProfileCompleted(String id) {
+		Customer c=customerRepository.getOne(id);
+		return c.isProfileCompleted();
+	}
 
 }

@@ -11,6 +11,7 @@ public class AppProperties {
 	private final Auth auth = new Auth();
 	private final OAuth2 oauth2 = new OAuth2();
 	private final Client client=new Client();
+	private final Midtrans midtrans=new Midtrans();
 
 	public static class Auth {
 		private String tokenSecret;
@@ -109,6 +110,41 @@ public class AppProperties {
 		}
 		
 	}
+	
+	public static final class Midtrans{
+		private String merchantId;
+		private String clientKey;
+		private String serverKey;
+		private boolean production;
+		
+		public void setProduction(boolean production) {
+			this.production = production;
+		}
+		
+		public boolean isProduction() {
+			return production;
+		}
+		public String getMerchantId() {
+			return merchantId;
+		}
+		public void setMerchantId(String merchantId) {
+			this.merchantId = merchantId;
+		}
+		public String getClientKey() {
+			return clientKey;
+		}
+		public void setClientKey(String clientKey) {
+			this.clientKey = clientKey;
+		}
+		public String getServerKey() {
+			return serverKey;
+		}
+		public void setServerKey(String serverKey) {
+			this.serverKey = serverKey;
+		}
+		
+		
+	}
 
 	public Auth getAuth() {
 		return auth;
@@ -120,5 +156,9 @@ public class AppProperties {
 	
 	public Client getClient() {
 		return client;
+	}
+	
+	public Midtrans getMidtrans() {
+		return midtrans;
 	}
 }

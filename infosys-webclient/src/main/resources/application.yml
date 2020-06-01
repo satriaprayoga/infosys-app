@@ -22,7 +22,9 @@ spring:
         registrationEventOutput:
           destination: registrationEvent
           content-type: application/json
-         
+        bookingEventOutput:
+          destination: bookingEvent
+          content-type: application/json
 app:
   auth:
     tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
@@ -35,6 +37,11 @@ app:
     id: infosysBackend
     secret: p4l4Wi7a
     scope: backend
+  midtrans:
+    merchantId: G548959218
+    clientKey: SB-Mid-client-sXPv8fVW-gc-payV
+    serverKey: SB-Mid-server-4DRMreNV8qXXXUm2vKWB8Zxj
+    production: false
     
   oauth2:
     # After successfully authenticating with the OAuth2 Provider,

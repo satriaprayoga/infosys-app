@@ -14,7 +14,7 @@ import lombok.Data;
 public class BookingRequest {
 	
 	private String customerId;
-
+	
 	private String destination;
 	
 	private String packageGroup;
@@ -32,6 +32,16 @@ public class BookingRequest {
 	@JsonSerialize(using = LocalDateSerializer.class)
 	private LocalDate checkout;
 	
+	private String name;
+	
+	private String phone;
+	
+	private String email;
+	
+	private String address;
+	
+	private String billingAddress;
+	
 	private Integer adults;
 	
 	private Integer children;
@@ -43,4 +53,6 @@ public class BookingRequest {
 	private Long grossAmount;
 	
 	private String status;
+	
+	
 }

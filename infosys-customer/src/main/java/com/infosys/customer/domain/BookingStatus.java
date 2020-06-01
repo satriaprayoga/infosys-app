@@ -3,7 +3,7 @@ package com.infosys.customer.domain;
 public enum BookingStatus {
 
 	CREATED,
-	CHECKOUT,
+	CHARGED,
 	BOOKED,
 	CANCELLED
 }
