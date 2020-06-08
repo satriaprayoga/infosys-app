@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Map;
 
 import org.apache.http.HttpHost;
+import org.apache.http.client.methods.HttpPost;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,13 +47,14 @@ public class ElasticsearchConfig extends AbstractElasticsearchConfiguration{
 	@Bean
 	public RestHighLevelClient elasticsearchClient() {
 		//InetSocketAddress endpoint=new InetSocketAddress("", 443);
-		ClientConfiguration clientConfiguration=ClientConfiguration
-				.builder()
-				.connectedTo(HttpHost.create(searchProperties.getElasticsearchUri()).toHostString())
-				.usingSsl()
-				.withBasicAuth(searchProperties.getUsername(), searchProperties.getPassword())
-												.build();
-		return RestClients.create(clientConfiguration).rest();
+//		ClientConfiguration clientConfiguration=ClientConfiguration
+//				.builder()
+//				.connectedTo(HttpHost.create(searchProperties.getElasticsearchUri()).toHostString())
+//				.usingSsl()
+//				.withBasicAuth(searchProperties.getUsername(), searchProperties.getPassword())
+//												.build();
+		//return RestClients.create(clientConfiguration).rest();
+		return RestClients.create(ClientConfiguration.builder().connectedTo(HttpHost.create(searchProperties.getElasticsearchUri()).toHostString()).build()).rest();
 	}
 	
 	@Bean
