@@ -177,6 +177,7 @@ public class DataInitializer implements CommandLineRunner{
 		hotel.setPrice(hotelJson.getPrice());
 		hotel.setPublished(hotelJson.isPublished());
 		hotel.setUnit(hotelJson.getUnit());
+		hotel.setCapacity(hotelJson.getCapacity());
 		return hotel;
 	}
 

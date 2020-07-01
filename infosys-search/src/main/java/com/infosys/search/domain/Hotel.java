@@ -9,7 +9,7 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 import lombok.Data;
 
 @Data
-@Document(indexName = "tour")
+@Document(indexName = "hotel")
 @Setting(settingPath = "es-config/destination.json")
 public class Hotel {
 

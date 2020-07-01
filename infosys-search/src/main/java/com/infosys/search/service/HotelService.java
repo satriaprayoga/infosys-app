@@ -26,6 +26,7 @@ public class HotelService extends AbstractBaseService<Hotel, String>{
 	public HotelService(HotelRepository hotelRepository,ElasticsearchOperations operations) {
 		this.hotelRepository=hotelRepository;
 		this.operations=operations;
+		setRepository(hotelRepository);
 	}
 	
 	public Hotel findById(String id) {
