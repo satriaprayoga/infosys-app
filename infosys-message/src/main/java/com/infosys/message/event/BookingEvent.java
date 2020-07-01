@@ -1,5 +1,7 @@
 package com.infosys.message.event;
 
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +13,7 @@ public class BookingEvent {
 	private String name;
 	private String email;
 	private String billingAddress;
+	private String packageId;
 	private String packageName;
 	private String packageGroup;
 	private String destination;
@@ -18,6 +21,8 @@ public class BookingEvent {
 	private String totalAmount;
 	private String bookingCode;
 	private String status;
-	
+	private int quantity;
+	private int capacity;
+	private Date bookedDate;
 	
 }

@@ -1,4 +1,4 @@
-package com.infosys.webclient.event;
+package com.infosys.search.event;
 
 import java.util.Date;
 
@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookingEvent {
-
 	private String name;
 	private String email;
 	private String billingAddress;
@@ -25,6 +24,4 @@ public class BookingEvent {
 	private int quantity;
 	private int capacity;
 	private Date bookedDate;
-	
-	
 }

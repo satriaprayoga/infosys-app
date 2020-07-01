@@ -1,0 +1,38 @@
+[
+	{
+		"destination": "Baluran Sabana Park",
+		"destinationId": "BLRN",
+		"location": "Situbondo, East Java",
+		"group": "Camper",
+		"name": "Baluran Camper Park",
+		"published": true,
+		"unit": "person",
+		"price": "750000",
+		"minOrder": 3,
+		"capacity": 20
+	},
+	{
+		"destination": "Lembang Glam Camp",
+		"destinationId": "LGCC",
+		"location": "Bandung, West Java",
+		"group": "Glamp Camp",
+		"name": "Bandung Super Glamp Camp",
+		"published": true,
+		"unit": "person",
+		"price": "750000",
+		"minOrder": 2,
+		"capacity": 10
+	},
+	{
+		"destination": "Puncak Nirwana",
+		"destinationId": "PNCN",
+		"location": "Bogor, West Java",
+		"group": "Home Stay",
+		"name": "Nirwana Home Stay",
+		"published": true,
+		"unit": "person",
+		"price": "750000",
+		"minOrder": 2,
+		"capacity": 10
+	}
+]

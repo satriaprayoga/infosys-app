@@ -12,14 +12,15 @@ spring:
   application:
     name: infosys-search
   rabbitmq:
-    addresses: localhost:5672
+    host: localhost
+    port: 5672
     username: guest
     password: guest
   cloud:
     stream:
       bindings:
-        input:
-          destination: tourEvent
+        bookingEventInput:
+          destination: bookingEvent
           content-type: application/json
 search:
   elasticsearch-uri: http://ec2-18-141-8-244.ap-southeast-1.compute.amazonaws.com:9200

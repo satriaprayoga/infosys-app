@@ -53,4 +53,6 @@ public class BookingRequest {
 	private Long grossAmount;
 	
 	private String status;
+	
+	private Integer capacity;
 }

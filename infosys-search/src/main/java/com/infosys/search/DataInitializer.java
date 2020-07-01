@@ -7,20 +7,25 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.infosys.search.domain.Destination;
+import com.infosys.search.domain.Hotel;
 import com.infosys.search.domain.Landmark;
 import com.infosys.search.domain.Tour;
 import com.infosys.search.service.DestinationService;
+import com.infosys.search.service.HotelService;
 import com.infosys.search.service.LandmarkService;
 import com.infosys.search.service.TourService;
 
 
-public class DataInitializer{
+@Component
+public class DataInitializer implements CommandLineRunner{
 
 	@Value("classpath:data/tour.json")
 	private Resource tourJsonFile;
@@ -30,6 +35,9 @@ public class DataInitializer{
 	
 	@Value("classpath:data/landmark.json")
 	private Resource landmarkJsonFile;
+	
+	@Value("classpath:data/hotel.json")
+	private Resource hotelJsonFile;
 
 	@Autowired
 	private TourService tourService;
@@ -39,6 +47,9 @@ public class DataInitializer{
 	
 	@Autowired
 	private LandmarkService landmarkService;
+	
+	@Autowired
+	private HotelService hotelService;
 
 	public void run(String... args) throws Exception {
 //		if (this.isInitialized()) {
@@ -47,12 +58,12 @@ public class DataInitializer{
 //
 		List<Tour> tours = this.loadTourFromFile();
 		tours.forEach(tourService::create);
-		
 		List<Landmark> land=this.loadLandmarkfromfile();
 		land.forEach(landmarkService::create);
 		List<Destination> dest=this.loadDestinationfromfile();
 		dest.forEach(destinationService::create);
-		
+		List<Hotel> hotels=this.loadHotelfromfile();
+		hotels.forEach(hotelService::create);
 	
 
 
@@ -83,6 +94,14 @@ public class DataInitializer{
 		return allFakeUsers.stream().map(this::from).map(this::generateLandId).collect(Collectors.toList());
 
 	}
+	
+	private List<Hotel> loadHotelfromfile()throws IOException{
+		ObjectMapper objectMapper=new ObjectMapper();
+		CollectionType collectionType = TypeFactory.defaultInstance().constructCollectionType(List.class,
+				HotelJson.class);
+		List<HotelJson> allFakeUsers = objectMapper.readValue(this.hotelJsonFile.getFile(), collectionType);
+		return allFakeUsers.stream().map(this::from).map(this::generateHotelId).collect(Collectors.toList());
+	}
 
 	private Tour generateTourId(Tour tour) {
 		tour.setId(UUID.randomUUID().toString());
@@ -97,6 +116,11 @@ public class DataInitializer{
 	private Landmark generateLandId(Landmark land) {
 		land.setId(UUID.randomUUID().toString());
 		return land;
+	}
+	
+	private Hotel generateHotelId(Hotel hotel) {
+		hotel.setId(UUID.randomUUID().toString());
+		return hotel;
 	}
 
 	private Destination from(DestinationJson destinationJson) {
@@ -140,6 +164,20 @@ public class DataInitializer{
 		tour.setName(tourJson.getName());
 		tour.setUnit(tourJson.getUnit());
 		return tour;
+	}
+	
+	private Hotel from(HotelJson hotelJson) {
+		Hotel hotel=new Hotel();
+		hotel.setDestination(hotelJson.getDestination());
+		hotel.setDestinationId(hotelJson.getDestinationId());
+		hotel.setGroup(hotelJson.getGroup());
+		hotel.setLocation(hotelJson.getLocation());
+		hotel.setMinOrder(hotelJson.getMinOrder());
+		hotel.setName(hotelJson.getName());
+		hotel.setPrice(hotelJson.getPrice());
+		hotel.setPublished(hotelJson.isPublished());
+		hotel.setUnit(hotelJson.getUnit());
+		return hotel;
 	}
 
 	

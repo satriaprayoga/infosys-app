@@ -1,5 +1,6 @@
 package com.infosys.webclient.web;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -44,13 +45,14 @@ public class BookingController {
 	@PreAuthorize("#principal.email == authentication.name")
 	public ApiResponse bookTour(@CurrentUser UserPrincipal principal, @Valid @RequestBody BookingRequest bookingRequest) {
 		BookingDTO book=bookingService.bookTour(bookingRequest);
+		Date bookedDate=java.sql.Date.valueOf(bookingRequest.getCheckin());
 		Map<String,Object> charged=paymentService.chargeBankTransfer(book);
 		@SuppressWarnings("unchecked")
 		List<Map<String, String>> items = (List<Map<String, String>>) charged.get("va_numbers");
 		Map<String,String> bankInfo=items.get(0);
 		BookingEvent event=new BookingEvent(book.getName(),book.getEmail(), 
-				book.getBillingAddress(), 
-				book.getPackageName(), book.getPackageGroup(), book.getDestination(), bankInfo.get("bank")+" "+bankInfo.get("va_number"), (String) charged.get("gross_amount"), (String)charged.get("order_id"), (String)charged.get("transaction_status"));
+				book.getBillingAddress(), book.getPackageId(),
+				book.getPackageName(), book.getPackageGroup(), book.getDestination(), bankInfo.get("bank")+" "+bankInfo.get("va_number"), (String) charged.get("gross_amount"), (String)charged.get("order_id"), (String)charged.get("transaction_status"),bookingRequest.getAdults(),bookingRequest.getCapacity(),bookedDate);
 		bookingEventPublisher.publishBookingEvent(event);
 		return new ApiResponse(HttpStatus.OK, book);
 	}

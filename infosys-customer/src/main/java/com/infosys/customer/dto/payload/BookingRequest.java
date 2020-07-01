@@ -54,5 +54,7 @@ public class BookingRequest {
 	
 	private String status;
 	
+	private Integer capacity;
+	
 	
 }
