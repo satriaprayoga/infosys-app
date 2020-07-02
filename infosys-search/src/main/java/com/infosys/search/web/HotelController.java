@@ -45,6 +45,11 @@ public class HotelController {
 		return hotelService.findById(id);
 	}
 	
+	@GetMapping("/aggregate")
+	public ResponseEntity<?> aggregate(@RequestParam String destinationId){
+		return ResponseEntity.ok(hotelService.aggregateFilter(destinationId));
+	}
+	
 	
 	@GetMapping("/available")
 	public ResponseEntity<?> searchByBookDate(@RequestParam String packageId, @RequestParam String bookDate) throws ParseException{

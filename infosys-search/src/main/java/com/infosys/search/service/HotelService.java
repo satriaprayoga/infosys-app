@@ -2,12 +2,23 @@ package com.infosys.search.service;
 
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.bucket.terms.ParsedStringTerms;
+import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.ResultsExtractor;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
@@ -40,6 +51,11 @@ public class HotelService extends AbstractBaseService<Hotel, String>{
 		return operations.queryForList(searchQuery, Hotel.class);
 	}
 	
+	public List<Hotel> findByDestinationId(String destinationId){
+		SearchQuery searchQuery=new NativeSearchQueryBuilder().withQuery(matchQuery("destinationId", destinationId)).build();
+		return operations.queryForList(searchQuery, Hotel.class);
+	}
+	
 	public List<Hotel> findByLocation(String location){
 		SearchQuery searchQuery=new NativeSearchQueryBuilder().withQuery(matchQuery("location", location)).build();
 		return operations.queryForList(searchQuery, Hotel.class);
@@ -58,29 +74,66 @@ public class HotelService extends AbstractBaseService<Hotel, String>{
 		return operations.queryForList(searchQuery, Hotel.class);
 	}
 	
-	public List<Hotel> findByDestinationGroup(String destination,String group){
+	public List<Hotel> findByDestinationGroup(String destination,String hotelGroup){
 		QueryBuilder queryBuilder=QueryBuilders.boolQuery()
 				  .must(QueryBuilders
 						  .matchQuery("destination", destination))
 						 
 				  .must(QueryBuilders
-						  .matchQuery("group", group)
+						  .matchQuery("hotelGroup", hotelGroup)
 						  );
 		NativeSearchQuery searchQuery=new NativeSearchQueryBuilder()
 					  .withQuery(queryBuilder).build();
 		return operations.queryForList(searchQuery, Hotel.class);
 	}
 	
-	public List<Hotel> findByDestinationIdGroup(String destinationId,String landmark,String group){
+	public List<Hotel> findByDestinationIdGroup(String destinationId,String hotelGroup){
 		QueryBuilder queryBuilder=QueryBuilders.boolQuery()
 				  .must(QueryBuilders
 						  .matchQuery("destinationId", destinationId))
+						 
 				  .must(QueryBuilders
-						  .matchQuery("group", group)
+						  .matchQuery("hotelGroup", hotelGroup)
 						  );
 		NativeSearchQuery searchQuery=new NativeSearchQueryBuilder()
 					  .withQuery(queryBuilder).build();
 		return operations.queryForList(searchQuery, Hotel.class);
+	}
+	
+	public List<Hotel> findByDestinationIdGroup(String destinationId,String landmark,String hotelGroup){
+		QueryBuilder queryBuilder=QueryBuilders.boolQuery()
+				  .must(QueryBuilders
+						  .matchQuery("destinationId", destinationId))
+				  .must(QueryBuilders
+						  .matchQuery("hotelGroup", hotelGroup)
+						  );
+		NativeSearchQuery searchQuery=new NativeSearchQueryBuilder()
+					  .withQuery(queryBuilder).build();
+		return operations.queryForList(searchQuery, Hotel.class);
+	}
+	
+	public Map<String, List<Hotel>> aggregateFilter(String destinationId){
+	
+		TermsAggregationBuilder aggregationBuilder=AggregationBuilders.terms("hotelGroup_count").field("hotelGroup");
+		NativeSearchQueryBuilder nativeQueryBuilder=new NativeSearchQueryBuilder().addAggregation(aggregationBuilder);
+		
+		NativeSearchQuery query=nativeQueryBuilder.build();
+		//List<Hotel> hotels=operations.queryForList(query, Hotel.class);
+		Aggregations aggregations=operations.query(query, new ResultsExtractor<Aggregations>() {
+
+			@Override
+			public Aggregations extract(SearchResponse response) {
+				return response.getAggregations();
+			}
+		});
+		Map<String, Aggregation> aggregationMap = aggregations.asMap();
+		ParsedStringTerms topTags = (ParsedStringTerms) aggregationMap.get("hotelGroup_count");
+		Map<String,List<Hotel>> result=new HashMap<String, List<Hotel>>();
+		List<String> keys=topTags.getBuckets().stream().map(k->k.getKeyAsString()).collect(Collectors.toList());
+		keys.forEach((k)->{
+			result.put(k, findByDestinationIdGroup(destinationId, k));
+		});
+		return result;
 	}
 	
 	public long count() {

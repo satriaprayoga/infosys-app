@@ -29,7 +29,7 @@ public class Hotel {
 	//@Field(type = FieldType.Keyword)
 	//private String [] additionals;
 	@Field(type = FieldType.Keyword)
-	private String group;
+	private String hotelGroup;
 	@Field(type = FieldType.Keyword)
 	private String name;
 	

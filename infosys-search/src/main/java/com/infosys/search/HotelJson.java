@@ -18,7 +18,7 @@ public class HotelJson {
 	//@Field(type = FieldType.Keyword)
 	//private String [] additionals;
 	
-	private String group;
+	private String hotelGroup;
 	
 	private String name;
 	

@@ -7,7 +7,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
@@ -22,8 +24,8 @@ import com.infosys.search.service.LandmarkService;
 import com.infosys.search.service.TourService;
 
 
-//@Component
-public class DataInitializer /*implements CommandLineRunner*/{
+@Component
+public class DataInitializer implements CommandLineRunner{
 
 	@Value("classpath:data/tour.json")
 	private Resource tourJsonFile;
@@ -54,12 +56,12 @@ public class DataInitializer /*implements CommandLineRunner*/{
 //			return;
 //		}
 //
-		List<Tour> tours = this.loadTourFromFile();
-		tours.forEach(tourService::create);
-		List<Landmark> land=this.loadLandmarkfromfile();
-		land.forEach(landmarkService::create);
-		List<Destination> dest=this.loadDestinationfromfile();
-		dest.forEach(destinationService::create);
+		//List<Tour> tours = this.loadTourFromFile();
+		//tours.forEach(tourService::create);
+		//List<Landmark> land=this.loadLandmarkfromfile();
+		//land.forEach(landmarkService::create);
+		//List<Destination> dest=this.loadDestinationfromfile();
+		//dest.forEach(destinationService::create);
 		//List<Hotel> hotels=this.loadHotelfromfile();
 		//hotels.forEach(hotelService::create);
 	
@@ -168,7 +170,7 @@ public class DataInitializer /*implements CommandLineRunner*/{
 		Hotel hotel=new Hotel();
 		hotel.setDestination(hotelJson.getDestination());
 		hotel.setDestinationId(hotelJson.getDestinationId());
-		hotel.setGroup(hotelJson.getGroup());
+		hotel.setHotelGroup(hotelJson.getHotelGroup());
 		hotel.setLocation(hotelJson.getLocation());
 		hotel.setMinOrder(hotelJson.getMinOrder());
 		hotel.setName(hotelJson.getName());
