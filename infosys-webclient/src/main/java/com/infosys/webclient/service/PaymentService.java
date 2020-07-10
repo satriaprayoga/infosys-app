@@ -14,7 +14,10 @@ import com.infosys.webclient.dto.BookingDTO;
 import com.midtrans.httpclient.error.MidtransError;
 import com.midtrans.service.MidtransCoreApi;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class PaymentService {
 
 	@Autowired
@@ -24,7 +27,7 @@ public class PaymentService {
 		try {
 			Map<String, Object> chargeParams=chargesPayload(booking);
 			JSONObject result=midtransCoreApi.chargeTransaction(chargeParams);
-			System.out.print(result);//{"status_message":"Success, Bank Transfer transaction is created","transaction_id":"65b8bb66-3402-4b92-b3c8-2e0bfe8afb7c","fraud_status":"accept","payment_type":"bank_transfer","transaction_status":"pending","status_code":"201","transaction_time":"2020-05-30 01:57:32","currency":"IDR","merchant_id":"G548959218","gross_amount":"500000.00","va_numbers":[{"bank":"bca","va_number":"59218831069"}],"order_id":"IB-hftxfm"}//	
+			log.info("######### "+result);;//{"status_message":"Success, Bank Transfer transaction is created","transaction_id":"65b8bb66-3402-4b92-b3c8-2e0bfe8afb7c","fraud_status":"accept","payment_type":"bank_transfer","transaction_status":"pending","status_code":"201","transaction_time":"2020-05-30 01:57:32","currency":"IDR","merchant_id":"G548959218","gross_amount":"500000.00","va_numbers":[{"bank":"bca","va_number":"59218831069"}],"order_id":"IB-hftxfm"}//	
 			return result.toMap();
 		} catch (MidtransError e) {
 			// TODO Auto-generated catch block

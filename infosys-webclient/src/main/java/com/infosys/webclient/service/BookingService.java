@@ -11,7 +11,10 @@ import com.infosys.webclient.dto.payload.BookingRequest;
 import com.infosys.webclient.dto.payload.PaymentInfoRequest;
 import com.infosys.webclient.service.clients.CustomerDataService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class BookingService {
 
 	@Autowired
@@ -34,6 +37,7 @@ public class BookingService {
 	}
 	
 	public BookingDTO bookTour(BookingRequest request) {
+		log.info("########## booking request"+request);
 		return customerDataService.bookTour(request).getBody();
 	}
 	

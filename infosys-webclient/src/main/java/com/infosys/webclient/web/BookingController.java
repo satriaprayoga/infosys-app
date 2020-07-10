@@ -28,8 +28,11 @@ import com.infosys.webclient.security.UserPrincipal;
 import com.infosys.webclient.service.BookingService;
 import com.infosys.webclient.service.PaymentService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/api/bookings")
+@Slf4j
 public class BookingController {
 
 	@Autowired
@@ -44,15 +47,19 @@ public class BookingController {
 	@PostMapping
 	@PreAuthorize("#principal.email == authentication.name")
 	public ApiResponse bookTour(@CurrentUser UserPrincipal principal, @Valid @RequestBody BookingRequest bookingRequest) {
+		
 		BookingDTO book=bookingService.bookTour(bookingRequest);
+		log.info("########## "+book);
 		Date bookedDate=java.sql.Date.valueOf(bookingRequest.getCheckin());
 		Map<String,Object> charged=paymentService.chargeBankTransfer(book);
 		@SuppressWarnings("unchecked")
 		List<Map<String, String>> items = (List<Map<String, String>>) charged.get("va_numbers");
 		Map<String,String> bankInfo=items.get(0);
+		Integer order=book.getAdults()+book.getChildren();
+		Integer caps=bookingRequest.getCapacity();
 		BookingEvent event=new BookingEvent(book.getName(),book.getEmail(), 
 				book.getBillingAddress(), book.getPackageId(),
-				book.getPackageName(), book.getPackageGroup(), book.getDestination(), bankInfo.get("bank")+" "+bankInfo.get("va_number"), (String) charged.get("gross_amount"), (String)charged.get("order_id"), (String)charged.get("transaction_status"),bookingRequest.getAdults(),bookingRequest.getCapacity(),bookedDate);
+				book.getPackageName(), book.getPackageGroup(), book.getDestination(), bankInfo.get("bank")+" "+bankInfo.get("va_number"), (String) charged.get("gross_amount"), (String)charged.get("order_id"), (String)charged.get("transaction_status"),order,caps,bookedDate);
 		bookingEventPublisher.publishBookingEvent(event);
 		return new ApiResponse(HttpStatus.OK, book);
 	}

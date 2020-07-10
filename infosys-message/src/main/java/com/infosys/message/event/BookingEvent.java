@@ -21,8 +21,8 @@ public class BookingEvent {
 	private String totalAmount;
 	private String bookingCode;
 	private String status;
-	private int quantity;
-	private int capacity;
+	private Integer order;
+	private Integer capacity;
 	private Date bookedDate;
 	
 }
